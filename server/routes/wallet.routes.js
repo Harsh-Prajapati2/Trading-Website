@@ -97,6 +97,7 @@ router.post('/debit',auth,async(req,res)=>{
         });
         }catch(err){
             console.log(err);
+            return res.status(500).json({message : "Internal server error"});
         }
     });
 
@@ -110,6 +111,7 @@ router.get('/balance',auth,async(req,res)=>{
         return res.json({balance : wallet.balance});
     }catch(err){
         console.log(err);
+        return res.status(500).json({message : "Internal server error"});
     }
 });
 
@@ -121,7 +123,48 @@ router.get('/transactions',auth,async(req,res)=>{
         return res.json({transactions});
     }catch(err){
         console.log(err);
+        return res.status(500).json({message : "Internal server error"});
     }
 });
 
+
+router.post('/withdraw',auth,async(req,res)=>{
+    try{    
+        const userId = req.user.userId;
+        const {amount , bankName,accountNo,ifsc,method} = req.body;
+        if(!amount || amount <= 0){
+            return res.status(400).json({message : "Invalid amount"});
+        }
+        const wallet = await Wallet.findOne({userId});
+        if(!wallet){
+            return res.status(404).json({message : "Wallet not found"});
+        }
+        if(amount > wallet.balance){
+            return res.status(200).json({message : "Insufficient Balance."})
+        }
+        wallet.balance -= amount;
+        await wallet.save();
+        const transaction = await Transaction.create({
+            userId,
+            type : "withdraw",
+            amount,
+            bankName,
+            accountNo,
+            ifsc,
+            method
+        });
+        transaction.save();
+        return res.status(200).json({
+            message : `${amount} Withdrawn Successfully.`,
+            balance : wallet.balance,
+            bankName,
+            accountNo,
+            ifsc,
+            method : method || "system"
+        })
+    }catch(err){
+        console.log(err);
+        return res.status(500).json({message : "Internal server error"});
+    }
+})
 module.exports = router;
