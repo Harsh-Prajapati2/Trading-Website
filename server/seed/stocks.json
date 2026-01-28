@@ -1,0 +1,111 @@
+[
+  {"symbol":"TCS","name":"Tata Consultancy Services","sector":"IT"},
+  {"symbol":"INFY","name":"Infosys Ltd","sector":"IT"},
+  {"symbol":"WIPRO","name":"Wipro Ltd","sector":"IT"},
+  {"symbol":"HCLTECH","name":"HCL Technologies","sector":"IT"},
+
+  {"symbol":"RELIANCE","name":"Reliance Industries","sector":"Energy"},
+  {"symbol":"ONGC","name":"Oil & Natural Gas Corp","sector":"Energy"},
+  {"symbol":"BPCL","name":"Bharat Petroleum","sector":"Energy"},
+  {"symbol":"IOCL","name":"Indian Oil Corporation","sector":"Energy"},
+
+  {"symbol":"TATAMOTORS","name":"Tata Motors Ltd","sector":"Automobile"},
+  {"symbol":"M&M","name":"Mahindra & Mahindra","sector":"Automobile"},
+  {"symbol":"BAJAJ-AUTO","name":"Bajaj Auto","sector":"Automobile"},
+  {"symbol":"ASHOKLEY","name":"Ashok Leyland","sector":"Automobile"},
+
+  {"symbol":"HDFCBANK","name":"HDFC Bank Ltd","sector":"Banking"},
+  {"symbol":"ICICIBANK","name":"ICICI Bank Ltd","sector":"Banking"},
+  {"symbol":"SBIN","name":"State Bank of India","sector":"Banking"},
+  {"symbol":"AXISBANK","name":"Axis Bank Ltd","sector":"Banking"},
+
+  {"symbol":"ITC","name":"ITC Ltd","sector":"FMCG"},
+  {"symbol":"HINDUNILVR","name":"Hindustan Unilever","sector":"FMCG"},
+  {"symbol":"BRITANNIA","name":"Britannia Industries","sector":"FMCG"},
+  {"symbol":"DABUR","name":"Dabur India","sector":"FMCG"},
+
+  {"symbol":"MARICO","name":"Marico Ltd","sector":"FMCG"},
+  {"symbol":"NESTLEIND","name":"Nestle India","sector":"FMCG"},
+  {"symbol":"COLPAL","name":"Colgate Palmolive","sector":"FMCG"},
+  {"symbol":"GODREJCP","name":"Godrej Consumer","sector":"FMCG"},
+
+  {"symbol":"SUNPHARMA","name":"Sun Pharmaceuticals","sector":"Pharma"},
+  {"symbol":"CIPLA","name":"Cipla Ltd","sector":"Pharma"},
+  {"symbol":"DRREDDY","name":"Dr Reddy Laboratories","sector":"Pharma"},
+  {"symbol":"LUPIN","name":"Lupin Ltd","sector":"Pharma"},
+
+  {"symbol":"TITAN","name":"Titan Company","sector":"Retail"},
+  {"symbol":"DMART","name":"Avenue Supermarts","sector":"Retail"},
+  {"symbol":"TRENT","name":"Trent Ltd","sector":"Retail"},
+  {"symbol":"ABFRL","name":"Aditya Birla Fashion Retail","sector":"Retail"},
+
+  {"symbol":"ASIANPAINT","name":"Asian Paints Ltd","sector":"Paint"},
+  {"symbol":"BERGEPAINT","name":"Berger Paints","sector":"Paint"},
+  {"symbol":"KANSAINER","name":"Kansai Nerolac Paints","sector":"Paint"},
+  {"symbol":"PIDILITIND","name":"Pidilite Industries","sector":"Paint"},
+
+  {"symbol":"ULTRACEMCO","name":"UltraTech Cement","sector":"Cement"},
+  {"symbol":"AMBUJACEM","name":"Ambuja Cement","sector":"Cement"},
+  {"symbol":"ACC","name":"ACC Ltd","sector":"Cement"},
+  {"symbol":"DALBHARAT","name":"Dalmia Bharat","sector":"Cement"},
+
+  {"symbol":"JSWSTEEL","name":"JSW Steel Ltd","sector":"Metals"},
+  {"symbol":"TATASTEEL","name":"Tata Steel Ltd","sector":"Metals"},
+  {"symbol":"HINDALCO","name":"Hindalco Industries","sector":"Metals"},
+  {"symbol":"SAIL","name":"Steel Authority of India","sector":"Metals"},
+
+  {"symbol":"BHARTIARTL","name":"Bharti Airtel Ltd","sector":"Telecom"},
+  {"symbol":"VODAFONE","name":"Vodafone Idea Ltd","sector":"Telecom"},
+  {"symbol":"TATACOMM","name":"Tata Communications","sector":"Telecom"},
+  {"symbol":"HFCL","name":"HFCL Ltd","sector":"Telecom"},
+
+  {"symbol":"ADANIENT","name":"Adani Enterprises","sector":"Conglomerate"},
+  {"symbol":"ADANIPORTS","name":"Adani Ports","sector":"Logistics"},
+  {"symbol":"ADANIGREEN","name":"Adani Green Energy","sector":"Energy"},
+  {"symbol":"ADANIPOWER","name":"Adani Power","sector":"Energy"},
+
+  {"symbol":"NTPC","name":"NTPC Ltd","sector":"Power"},
+  {"symbol":"POWERGRID","name":"Power Grid Corp","sector":"Power"},
+  {"symbol":"TATAPOWER","name":"Tata Power","sector":"Power"},
+  {"symbol":"NHPC","name":"NHPC Ltd","sector":"Power"},
+
+  {"symbol":"BEL","name":"Bharat Electronics","sector":"Defense"},
+  {"symbol":"HAL","name":"Hindustan Aeronautics","sector":"Defense"},
+  {"symbol":"BDL","name":"Bharat Dynamics","sector":"Defense"},
+  {"symbol":"SOLARA","name":"Solar Industries","sector":"Defense"},
+
+  {"symbol":"VOLTAS","name":"Voltas Ltd","sector":"Consumer Durables"},
+  {"symbol":"WHIRLPOOL","name":"Whirlpool India","sector":"Consumer Durables"},
+  {"symbol":"BLUESTAR","name":"Blue Star Ltd","sector":"Consumer Durables"},
+  {"symbol":"BAJAJELEC","name":"Bajaj Electricals","sector":"Consumer Durables"},
+
+  {"symbol":"LTI","name":"L&T Infotech","sector":"IT"},
+  {"symbol":"LTTS","name":"L&T Technology Services","sector":"IT"},
+  {"symbol":"TECHM","name":"Tech Mahindra","sector":"IT"},
+  {"symbol":"MPHASIS","name":"Mphasis Ltd","sector":"IT"},
+
+  {"symbol":"APOLLOHOSP","name":"Apollo Hospitals","sector":"Healthcare"},
+  {"symbol":"FORTIS","name":"Fortis Healthcare","sector":"Healthcare"},
+  {"symbol":"NARAYANA","name":"Narayana Hrudayalaya","sector":"Healthcare"},
+  {"symbol":"MAXHEALTH","name":"Max Healthcare","sector":"Healthcare"},
+
+  {"symbol":"INDIGO","name":"InterGlobe Aviation","sector":"Aviation"},
+  {"symbol":"SPICEJET","name":"SpiceJet Ltd","sector":"Aviation"},
+  {"symbol":"JETAIRWAYS","name":"Jet Airways","sector":"Aviation"},
+  {"symbol":"GMRINFRA","name":"GMR Infrastructure","sector":"Aviation"},
+
+  {"symbol":"IOC","name":"Indian Oil Corporation","sector":"Energy"},
+  {"symbol":"GAIL","name":"GAIL Ltd","sector":"Energy"},
+  {"symbol":"PETRONET","name":"Petronet LNG","sector":"Energy"},
+  {"symbol":"GSPL","name":"Gujarat State Petronet","sector":"Energy"},
+
+  {"symbol":"LICI","name":"Life Insurance Corporation","sector":"Insurance"},
+  {"symbol":"ICICIPRULI","name":"ICICI Prudential Life","sector":"Insurance"},
+  {"symbol":"HDFCLIFE","name":"HDFC Life Insurance","sector":"Insurance"},
+  {"symbol":"SBI LIFE","name":"SBI Life Insurance","sector":"Insurance"},
+
+  {"symbol":"ZOMATO","name":"Zomato Ltd","sector":"Internet"},
+  {"symbol":"NYKAA","name":"FSN E-Commerce Ventures","sector":"Internet"},
+  {"symbol":"PAYTM","name":"One97 Communications","sector":"Internet"},
+  {"symbol":"IRCTC","name":"Indian Railway Catering","sector":"Railways"}
+]

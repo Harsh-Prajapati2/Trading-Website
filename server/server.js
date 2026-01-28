@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
 require('dotenv').config();
+require("./jobs/priceCron");
 
 const app = express();
 
@@ -23,7 +24,7 @@ app.get("/",(req,res)=>{
 app.use('/auth',require("./routes/auth.routes"));
 app.use('/kyc',require("./routes/kyc.routes"));
 app.use('/wallet',require("./routes/wallet.routes"))
-
+app.use("/stocks", require("./routes/stocks.routes"));
 
 app.listen(5000,()=>{
     console.log("Server is running on port 5000");
