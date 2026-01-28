@@ -25,7 +25,8 @@ app.use('/auth',require("./routes/auth.routes"));
 app.use('/kyc',require("./routes/kyc.routes"));
 app.use('/wallet',require("./routes/wallet.routes"))
 app.use("/stocks", require("./routes/stocks.routes"));
-
+app.use('/trade', require("./routes/trade.routes"));
+app.use('/portfolio', require("./routes/portfolio.routes"));
 app.listen(5000,()=>{
     console.log("Server is running on port 5000");
 });
