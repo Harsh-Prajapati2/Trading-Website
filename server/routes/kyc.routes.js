@@ -7,7 +7,7 @@ const mongoose = require('mongoose');
 const auth = require("../middlewares/auth"); // middleware
 
 
-router.post("/kyc", auth, async(req, res) => {
+router.post("/submit", auth, async(req, res) => {
     try {
         const {
             fullName,
@@ -69,7 +69,7 @@ router.post("/kyc", auth, async(req, res) => {
     }
 });
 
-router.get("/kyc/status", auth, async(req, res) => {
+router.get("/submit/status", auth, async(req, res) => {
     try {
         const userId = req.user.userId;
 

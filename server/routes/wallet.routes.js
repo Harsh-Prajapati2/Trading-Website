@@ -82,6 +82,19 @@ router.post('/debit',auth,async(req,res)=>{
         wallet.balance -= amount;
         await wallet.save();
 
+        // save transaction 
+        const transaction = await Transaction.create({
+            userId,
+            type : "debit",
+            amount,
+            method : method || "system",
+            status : "success"
+        })
+        transaction.save();
+        return res.status(200).send({
+            message : `${amount} Debited Successfully.`,
+            balance : wallet.balance
+        });
         }catch(err){
             console.log(err);
         }
