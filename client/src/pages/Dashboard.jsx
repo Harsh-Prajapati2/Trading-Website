@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import Navbar from "../components/Navbar";
@@ -24,6 +24,9 @@ export default function Dashboard() {
   const [depositAmount, setDepositAmount] = useState("");
   const [showDeposit, setShowDeposit] = useState(false);
   const [depositError, setDepositError] = useState("");
+
+  // Sorting State
+  const [sortConfig, setSortConfig] = useState({ key: null, direction: "desc" });
 
   /**
    * Main data fetching function
@@ -72,6 +75,25 @@ export default function Dashboard() {
   const calculateUnrealizedPnL = () => {
     return portfolio.reduce((sum, item) => sum + (item.unrealized || 0), 0);
   };
+
+  // Sorting Logic
+  const handleSort = (key) => {
+    let direction = "asc";
+    if (sortConfig.key === key && sortConfig.direction === "asc") {
+      direction = "desc";
+    }
+    setSortConfig({ key, direction });
+  };
+
+  const sortedPortfolio = useMemo(() => {
+    if (!sortConfig.key) return portfolio;
+    
+    return [...portfolio].sort((a, b) => {
+      if (a[sortConfig.key] < b[sortConfig.key]) return sortConfig.direction === "asc" ? -1 : 1;
+      if (a[sortConfig.key] > b[sortConfig.key]) return sortConfig.direction === "asc" ? 1 : -1;
+      return 0;
+    });
+  }, [portfolio, sortConfig]);
 
   // Action Handlers
   const handleDeposit = async () => {
@@ -179,13 +201,19 @@ export default function Dashboard() {
                     <th>Avg. Price</th>
                     <th>Current Price</th>
                     <th>Current Value</th>
-                    <th>P&L</th>
+                    <th 
+                      onClick={() => handleSort("unrealized")} 
+                      style={{ cursor: "pointer", userSelect: "none" }}
+                      title="Sort by P&L"
+                    >
+                      P&L {sortConfig.key === "unrealized" ? (sortConfig.direction === "asc" ? "▲" : "▼") : "↕"}
+                    </th>
                     <th>Return %</th>
                     <th>Actions</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {portfolio.map((holding) => (
+                  {sortedPortfolio.map((holding) => (
                     <tr key={holding.symbol} className="holding-row">
                       <td className="symbol-cell"><strong>{holding.symbol}</strong></td>
                       <td>{holding.quantity}</td>
