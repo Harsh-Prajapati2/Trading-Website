@@ -1,0 +1,51 @@
+:root {
+  --bg-main: #f8fafc;        /* Light Gray */
+  --bg-card: #ffffff;        /* White */
+  --border-color: #e2e8f0;    /* Light border */
+
+  --text-primary: #1e293b;   /* Dark Slate for text */
+  --text-secondary: #64748b; /* Medium Slate for text */
+
+  --neon-blue: #007BFF;       /* A more standard, professional blue */
+  --neon-green: #28a745;      /* A standard success green */
+  --neon-pink: #dc3545;       /* A standard danger red */
+  
+  --radius: 8px;
+  --border-width: 1px;
+}
+
+.dashboard-header {
+  margin-bottom: 2rem;
+}
+
+.dashboard-header h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0 0 0.25rem;
+}
+
+.dashboard-header p {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.stock-dashboard-grid {
+  display: grid;
+  grid-template-areas:
+    "chart chart trade"
+    "chart chart book"
+    "assets assets assets";
+  grid-template-columns: 1fr 1fr 350px;
+  grid-template-rows: auto auto 1fr;
+  gap: 1.5rem;
+}
+
+.card-glassmorphism {
+  background-color: var(--bg-card);
+  border-radius: var(--radius);
+  border: var(--border-width) solid var(--border-color);
+  /* Glassmorphism is less effective in light mode, so we rely on shadows */
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}

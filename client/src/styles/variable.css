@@ -1,0 +1,17 @@
+/* styles/variables.css */
+
+:root {
+  --bg-main: #0f172a;        /* Dark Navy */
+  --bg-card: #111827;        /* Card background */
+  --border: #1f2937;
+
+  --text-primary: #e5e7eb;
+  --text-secondary: #9ca3af;
+
+  --green: #10b981;          /* Profit */
+  --red: #ef4444;            /* Loss */
+  --blue: #3b82f6;           /* Actions */
+  --yellow: #facc15;
+
+  --radius: 8px;
+}

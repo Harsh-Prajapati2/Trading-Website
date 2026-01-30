@@ -4,8 +4,8 @@ require("dotenv").config();
 
 const router = express.Router();
 const API_KEY = process.env.ALPHA_VANTAGE_KEY;
-const Stock = require("../models/stock.model");
-
+// const Stock = require("../models/stock.model");
+const Stock = require("../models/stockPrice.model")
 router.get("/", async (req, res) => {
     const stocks = await Stock.find({});
     return res.json(stocks);
