@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const order = require('../models/order.model');
+const Order = require('../models/order.model');
 const mongoose = require('mongoose');
 const Portfolio = require('../models/portfolio.model');
 const Wallet = require('../models/wallet.model');

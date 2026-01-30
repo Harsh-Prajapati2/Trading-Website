@@ -3,6 +3,8 @@ const router = express.Router();
 
 const auth = require('../middlewares/auth');
 const Portfolio = require('../models/portfolio.model');
+const Order = require('../models/order.model');
+const StockPrice = require('../models/stockPrice.model');
 
 
 router.get("/portfolio", auth, async (req, res) => {

@@ -5,6 +5,11 @@ const userSchema = new mongoose.Schema({
         type : String,
         required : true
     },
+    username: {
+        type: String,
+        sparse: true,
+        unique: true
+    },
     mobileNo : {
         type : Number,
         required : true,
@@ -19,6 +24,6 @@ const userSchema = new mongoose.Schema({
         type : String,
         required : true
     }
-});
+}, { timestamps: true });
 
 module.exports = mongoose.model('User',userSchema);

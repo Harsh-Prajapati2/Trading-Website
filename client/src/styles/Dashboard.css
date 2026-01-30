@@ -1,0 +1,294 @@
+:root {
+  --slate-900: #1a202c;
+  --slate-800: #2d3748;
+  --slate-700: #4a5568;
+  --slate-400: #a0aec0;
+  --slate-100: #f1f5f9;
+  --neon-blue: #00f6ff;
+  --neon-green: #39ff14;
+  --error-red: #ff4444;
+}
+
+.dashboard {
+  min-height: 100vh;
+  background-color: var(--slate-900);
+  color: var(--slate-100);
+  display: flex;
+  flex-direction: column;
+}
+
+.dashboard-header {
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid rgba(74, 85, 104, 0.3);
+}
+
+.dashboard-header h1 {
+  margin: 0;
+  font-size: 2rem;
+  color: var(--neon-blue);
+}
+.dashboard-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  color: var(--slate-400);
+  font-size: 1.2rem;
+}
+
+.dashboard-error {
+  background-color: rgba(255, 68, 68, 0.1);
+  border: 1px solid var(--error-red);
+  color: #ff9999;
+  padding: 1rem;
+  margin: 1rem;
+  border-radius: 8px;
+}
+
+.dashboard-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  padding: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.stat-card {
+  background-color: var(--slate-800);
+  border: 1px solid rgba(74, 85, 104, 0.3);
+  border-radius: 8px;
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.stat-card h3 {
+  margin: 0 0 1rem;
+  color: var(--slate-400);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.stat-value {
+  margin: 0;
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: var(--neon-green);
+}
+
+.stat-value.positive {
+  color: var(--neon-green);
+}
+
+.stat-value.negative {
+  color: var(--error-red);
+}
+
+.portfolio-section {
+  padding: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  background-color: var(--slate-800);
+  border-radius: 8px;
+  border: 1px solid rgba(74, 85, 104, 0.3);
+  margin-top: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.portfolio-section h2 {
+  margin-top: 0;
+  color: var(--neon-blue);
+  border-bottom: 2px solid rgba(0, 246, 255, 0.3);
+  padding-bottom: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.no-holdings {
+  color: var(--slate-400);
+  text-align: center;
+  padding: 2rem;
+}
+
+.portfolio-table-container {
+  overflow-x: auto;
+}
+
+.portfolio-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+.portfolio-table thead {
+  border-bottom: 2px solid rgba(0, 246, 255, 0.3);
+}
+
+.portfolio-table th {
+  padding: 1rem 0.5rem;
+  text-align: left;
+  color: var(--neon-blue);
+  font-weight: 600;
+}
+
+.portfolio-table td {
+  padding: 1rem 0.5rem;
+  border-bottom: 1px solid rgba(74, 85, 104, 0.3);
+}
+
+.portfolio-table tbody tr:hover {
+  background-color: rgba(0, 246, 255, 0.05);
+}
+
+.symbol {
+  font-weight: 600;
+  color: var(--neon-green);
+}
+
+.positive {
+  color: var(--neon-green);
+  font-weight: 500;
+}
+
+.negative {
+  color: var(--error-red);
+  font-weight: 500;
+}
+
+.action-buttons {
+  padding: 0 2rem 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.btn-primary {
+  padding: 0.75rem 1.5rem;
+  background-color: var(--neon-blue);
+  color: var(--slate-900);
+  border: none;
+  border-radius: 4px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 1rem;
+}
+
+.btn-primary:hover {
+  background-color: var(--neon-green);
+  box-shadow: 0 0 20px rgba(57, 255, 20, 0.5);
+}
+
+.deposit-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.deposit-card {
+  background-color: var(--slate-800);
+  border: 1px solid rgba(74, 85, 104, 0.3);
+  border-radius: 8px;
+  padding: 2rem;
+  width: 90%;
+  max-width: 400px;
+}
+
+.deposit-card h3 {
+  margin-top: 0;
+  color: var(--neon-blue);
+}
+
+.deposit-card input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background-color: rgba(45, 55, 72, 0.5);
+  border: 1px solid rgba(0, 246, 255, 0.3);
+  border-radius: 4px;
+  color: var(--slate-100);
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  box-sizing: border-box;
+}
+
+.deposit-card input:focus {
+  outline: none;
+  border-color: var(--neon-blue);
+  box-shadow: 0 0 0 3px rgba(0, 246, 255, 0.2);
+}
+
+.deposit-card .error {
+  color: var(--error-red);
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.modal-buttons {
+  display: flex;
+  gap: 1rem;
+}
+
+.btn-confirm,
+.btn-cancel {
+  flex: 1;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 4px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-confirm {
+  background-color: var(--neon-blue);
+  color: var(--slate-900);
+}
+
+.btn-confirm:hover {
+  background-color: var(--neon-green);
+}
+
+.btn-cancel {
+  background-color: transparent;
+  border: 1px solid var(--slate-400);
+  color: var(--slate-100);
+}
+
+.btn-cancel:hover {
+  border-color: var(--error-red);
+  color: var(--error-red);
+}
+
+@media (max-width: 768px) {
+  .dashboard-header {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .dashboard-stats {
+    grid-template-columns: 1fr;
+    padding: 1rem;
+  }
+
+  .portfolio-section {
+    padding: 1rem;
+  }
+
+  .portfolio-table {
+    font-size: 0.85rem;
+  }
+
+  .portfolio-table th,
+  .portfolio-table td {
+    padding: 0.5rem;
+  }
+}

@@ -56,7 +56,7 @@ router.post('/credit',auth,async(req,res)=>{
             method : method || "system",
             status : "success"
         });
-        transaction.save();
+        await transaction.save();
         return res.json({
             message : "Wallet Credited Successfully.",
             balance : wallet.balance,
@@ -90,7 +90,7 @@ router.post('/debit',auth,async(req,res)=>{
             method : method || "system",
             status : "success"
         })
-        transaction.save();
+        await transaction.save();
         return res.status(200).send({
             message : `${amount} Debited Successfully.`,
             balance : wallet.balance
