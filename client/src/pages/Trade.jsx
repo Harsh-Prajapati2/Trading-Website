@@ -4,6 +4,7 @@ import { buyStock, sellStock, getPortfolio } from "../api/trade.api";
 import { getWallet } from "../api/wallet.api";
 import { validateTradeForm } from "../utils/validation";
 import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 import "../styles/Trade.css";
 
 export default function Trade() {
@@ -220,6 +221,7 @@ export default function Trade() {
         </div>
       </div>
       </div>
+      <Footer />
     </div>
   );
 }

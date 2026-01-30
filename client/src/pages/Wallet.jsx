@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 import { getWallet, creditWallet, withdrawWallet, initWallet } from "../api/wallet.api";
 import "../styles/Wallet.css";
 
@@ -356,6 +357,7 @@ export default function Wallet() {
           </div>
         )}
       </div>
+      <Footer />
     </div>
   );
 }

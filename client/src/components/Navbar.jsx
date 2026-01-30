@@ -51,6 +51,12 @@ export default function Navbar() {
           >
             Transactions
           </button>
+          <button
+            className="nav-link"
+            onClick={() => navigateTo("/stock-transactions")}
+          >
+            Trade History
+          </button>
         </div>
 
         <div className="navbar-right">

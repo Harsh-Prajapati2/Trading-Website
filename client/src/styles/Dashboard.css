@@ -140,6 +140,49 @@
   background-color: rgba(0, 246, 255, 0.05);
 }
 
+.portfolio-table td.actions {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  padding: 0.75rem 0.5rem;
+}
+
+.btn-buy-more,
+.btn-sell {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.btn-buy-more {
+  background-color: rgba(57, 255, 20, 0.15);
+  color: var(--neon-green);
+  border: 1px solid var(--neon-green);
+}
+
+.btn-buy-more:hover {
+  background-color: var(--neon-green);
+  color: var(--slate-900);
+  box-shadow: 0 0 15px rgba(57, 255, 20, 0.4);
+}
+
+.btn-sell {
+  background-color: rgba(255, 68, 68, 0.15);
+  color: #ff9999;
+  border: 1px solid #ff9999;
+}
+
+.btn-sell:hover {
+  background-color: var(--error-red);
+  color: white;
+  box-shadow: 0 0 15px rgba(255, 68, 68, 0.4);
+}
+
 .symbol {
   font-weight: 600;
   color: var(--neon-green);
@@ -291,4 +334,196 @@
   .portfolio-table td {
     padding: 0.5rem;
   }
+}
+/* --- BUTTON UI UPGRADE --- */
+
+/* Base style for all dashboard buttons to ensure consistency */
+.btn-buy-more,
+.btn-sell,
+.btn-primary,
+.btn-confirm,
+.btn-cancel {
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 0.75rem; /* Slightly smaller for that pro-trading look */
+  border-radius: 4px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Buy More / Positive Action */
+.btn-buy-more {
+  background-color: transparent;
+  color: var(--neon-green);
+  border: 1px solid var(--neon-green);
+  box-shadow: inset 0 0 0 0 rgba(57, 255, 20, 0.2);
+}
+
+.btn-buy-more:hover {
+  background-color: var(--neon-green);
+  color: var(--slate-900);
+  box-shadow: 0 0 15px rgba(57, 255, 20, 0.6), 
+              inset 0 0 10px rgba(0, 0, 0, 0.2);
+  transform: translateY(-2px);
+}
+
+/* Sell / Danger Action */
+.btn-sell {
+  background-color: transparent;
+  color: var(--error-red);
+  border: 1px solid var(--error-red);
+}
+
+.btn-sell:hover {
+  background-color: var(--error-red);
+  color: white;
+  box-shadow: 0 0 15px rgba(255, 68, 68, 0.6);
+  transform: translateY(-2px);
+}
+
+/* Primary Action (e.g., Deposit Trigger) */
+.btn-primary, .btn-confirm {
+  background: linear-gradient(135deg, var(--neon-blue), #00d4ff);
+  color: var(--slate-900);
+  border: none;
+  padding: 0.75rem 1.5rem;
+  box-shadow: 0 4px 0 #008891; /* Subtle 3D effect */
+}
+
+.btn-primary:hover, .btn-confirm:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(0, 246, 255, 0.4), 0 2px 0 #008891;
+  filter: brightness(1.1);
+}
+
+.btn-primary:active, .btn-confirm:active {
+  transform: translateY(2px);
+  box-shadow: 0 0 0 transparent;
+}
+
+/* Cancel / Ghost Button */
+.btn-cancel {
+  background-color: rgba(74, 85, 104, 0.1);
+  border: 1px solid var(--slate-700);
+  color: var(--slate-400);
+}
+
+.btn-cancel:hover {
+  border-color: var(--slate-100);
+  color: var(--slate-100);
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* --- MODAL UI ENHANCEMENT --- */
+
+.deposit-card {
+  background-color: var(--slate-800);
+  border: 2px solid var(--neon-blue); /* Stronger border for the modal */
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.5), 0 0 10px rgba(0, 246, 255, 0.2);
+  padding: 2.5rem;
+  animation: modalSlideUp 0.3s ease-out;
+}
+
+@keyframes modalSlideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.deposit-card input {
+  border: 1px solid var(--slate-700);
+  background: var(--slate-900);
+  padding: 1rem;
+  font-family: 'Courier New', monospace; /* Professional ticker look */
+  color: var(--neon-green);
+  font-size: 1.2rem;
+}
+
+/* Custom Table Action Spacing */
+.portfolio-table td.actions {
+  display: flex;
+  gap: 0.75rem; /* More breathing room */
+  justify-content: flex-start;
+}
+
+/* Container for the buttons in the table row */
+.actions-cell {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+/* Base style for both action buttons */
+.btn-action-buy,
+.btn-action-sell {
+  flex: 1;
+  padding: 6px 12px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-radius: 4px;
+  cursor: pointer;
+  background: transparent;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  min-width: 70px;
+  outline: none;
+}
+
+/* --- BUY BUTTON (Neon Green) --- */
+.btn-action-buy {
+  color: var(--neon-green);
+  border: 1px solid rgba(57, 255, 20, 0.4);
+}
+
+.btn-action-buy:hover {
+  background-color: var(--neon-green);
+  color: var(--slate-900);
+  border-color: var(--neon-green);
+  box-shadow: 0 0 12px rgba(57, 255, 20, 0.5);
+  transform: translateY(-1px);
+}
+
+.btn-action-buy:active {
+  transform: translateY(1px);
+  box-shadow: 0 0 4px rgba(57, 255, 20, 0.3);
+}
+
+/* --- SELL BUTTON (Neon Red/Error) --- */
+.btn-action-sell {
+  color: var(--error-red);
+  border: 1px solid rgba(255, 68, 68, 0.4);
+}
+
+.btn-action-sell:hover {
+  background-color: var(--error-red);
+  color: white;
+  border-color: var(--error-red);
+  box-shadow: 0 0 12px rgba(255, 68, 68, 0.5);
+  transform: translateY(-1px);
+}
+
+.btn-action-sell:active {
+  transform: translateY(1px);
+  box-shadow: 0 0 4px rgba(255, 68, 68, 0.3);
+}
+
+/* --- OPTIONAL: Price Update Flash --- */
+/* Add this class via JS if you want the price cell to flash when it updates */
+.price-update-up {
+  animation: flash-green 0.8s ease;
+}
+
+.price-update-down {
+  animation: flash-red 0.8s ease;
+}
+
+@keyframes flash-green {
+  0% { background-color: rgba(57, 255, 20, 0.2); }
+  100% { background-color: transparent; }
+}
+
+@keyframes flash-red {
+  0% { background-color: rgba(255, 68, 68, 0.2); }
+  100% { background-color: transparent; }
 }

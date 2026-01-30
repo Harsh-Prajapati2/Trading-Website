@@ -3,11 +3,13 @@ import { AuthProvider } from "./context/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Login from "./pages/Auth/Login";
 import Signup from "./pages/Auth/Signup";
+import ForgotPassword from "./pages/Auth/ForgotPassword";
 import Dashboard from "./pages/Dashboard";
 import Stocks from "./pages/Stocks";
 import Trade from "./pages/Trade";
 import Wallet from "./pages/Wallet";
 import Transactions from "./pages/Transactions";
+import StockTransactions from "./pages/StockTransactions";
 import "./App.css";
 
 export default function App() {
@@ -16,6 +18,7 @@ export default function App() {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route
           path="/dashboard"
           element={
@@ -53,6 +56,14 @@ export default function App() {
           element={
             <ProtectedRoute>
               <Transactions />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/stock-transactions"
+          element={
+            <ProtectedRoute>
+              <StockTransactions />
             </ProtectedRoute>
           }
         />

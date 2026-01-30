@@ -1,41 +1,79 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 import { getPortfolioDetail, getRealizedPnL } from "../api/trade.api";
 import { creditWallet } from "../api/wallet.api";
 import "../styles/Dashboard.css";
 
 export default function Dashboard() {
-  const { user, logout } = useAuth();
+  const { user } = useAuth();
+  const navigate = useNavigate();
+  
+  // Core Data State
   const [portfolio, setPortfolio] = useState([]);
   const [realizedPnL, setRealizedPnL] = useState(0);
+  
+  // UI State
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [lastUpdated, setLastUpdated] = useState(new Date());
+  
+  // Modal/Form State
   const [depositAmount, setDepositAmount] = useState("");
   const [showDeposit, setShowDeposit] = useState(false);
   const [depositError, setDepositError] = useState("");
 
-  useEffect(() => {
-    fetchDashboardData();
-  }, []);
-
-  const fetchDashboardData = async () => {
+  /**
+   * Main data fetching function
+   * @param {boolean} showLoadingSpinner - If true, triggers the global loading state
+   */
+  const fetchDashboardData = useCallback(async (showLoadingSpinner = false) => {
     try {
-      setLoading(true);
+      if (showLoadingSpinner) setLoading(true);
+
       const [portfolioData, pnlData] = await Promise.all([
         getPortfolioDetail(),
         getRealizedPnL(),
       ]);
+
       setPortfolio(portfolioData);
       setRealizedPnL(pnlData.realizedPnL || 0);
+      setLastUpdated(new Date());
       setError("");
     } catch (err) {
-      setError(err.error || "Failed to load dashboard data");
+      console.error("Fetch Error:", err);
+      setError(err.error || "Failed to sync dashboard data");
     } finally {
-      setLoading(false);
+      if (showLoadingSpinner) setLoading(false);
     }
+  }, []);
+
+  // Effect for Polling (3-second interval)
+  useEffect(() => {
+    // Initial load
+    fetchDashboardData(true);
+
+    // Setup interval
+    const pollInterval = setInterval(() => {
+      fetchDashboardData(false); // Update silently in background
+    }, 3000);
+
+    // Cleanup on unmount
+    return () => clearInterval(pollInterval);
+  }, [fetchDashboardData]);
+
+  // Calculation Helpers
+  const calculateTotalValue = () => {
+    return portfolio.reduce((sum, item) => sum + (item.currentPrice * item.quantity), 0);
   };
 
+  const calculateUnrealizedPnL = () => {
+    return portfolio.reduce((sum, item) => sum + (item.unrealized || 0), 0);
+  };
+
+  // Action Handlers
   const handleDeposit = async () => {
     setDepositError("");
     const amount = parseFloat(depositAmount);
@@ -49,118 +87,154 @@ export default function Dashboard() {
       await creditWallet(amount);
       setDepositAmount("");
       setShowDeposit(false);
-      fetchDashboardData();
+      fetchDashboardData(false); // Refresh after deposit
     } catch (err) {
       setDepositError(err.error || "Failed to deposit funds");
     }
   };
 
-  const calculateTotalValue = () => {
-    return portfolio.reduce((sum, item) => sum + (item.currentPrice * item.quantity), 0);
+  const handleQuickBuy = (symbol) => {
+    navigate("/stocks", { state: { autoSelect: symbol } });
   };
 
-  const calculateUnrealizedPnL = () => {
-    return portfolio.reduce((sum, item) => sum + item.unrealized, 0);
+  const handleSell = (symbol) => {
+    const stock = portfolio.find((p) => p.symbol === symbol);
+    navigate("/trade", {
+      state: {
+        stock: {
+          symbol,
+          price: stock?.currentPrice,
+        },
+        tradeType: "SELL",
+      },
+    });
   };
 
   if (loading) {
-    return <div className="dashboard-loading">Loading...</div>;
+    return (
+      <div className="dashboard-loading-container">
+        <div className="spinner"></div>
+        <p>Loading your portfolio...</p>
+      </div>
+    );
   }
 
   return (
     <div className="dashboard">
       <Navbar />
-      <header className="dashboard-header">
-        <h1>Dashboard</h1>
-      </header>
-
-      {error && <div className="dashboard-error">{error}</div>}
-
-      <div className="dashboard-stats">
-        <div className="stat-card">
-          <h3>Portfolio Value</h3>
-          <p className="stat-value">₹{calculateTotalValue().toFixed(2)}</p>
-        </div>
-
-        <div className="stat-card">
-          <h3>Unrealized P&L</h3>
-          <p className={`stat-value ${calculateUnrealizedPnL() >= 0 ? "positive" : "negative"}`}>
-            ₹{calculateUnrealizedPnL().toFixed(2)}
-          </p>
-        </div>
-
-        <div className="stat-card">
-          <h3>Realized P&L</h3>
-          <p className={`stat-value ${realizedPnL >= 0 ? "positive" : "negative"}`}>
-            ₹{realizedPnL.toFixed(2)}
-          </p>
-        </div>
-      </div>
-
-      <div className="portfolio-section">
-        <h2>Your Holdings</h2>
-        {portfolio.length === 0 ? (
-          <p className="no-holdings">No holdings yet. Start trading!</p>
-        ) : (
-          <div className="portfolio-table-container">
-            <table className="portfolio-table">
-              <thead>
-                <tr>
-                  <th>Symbol</th>
-                  <th>Quantity</th>
-                  <th>Avg. Price</th>
-                  <th>Current Price</th>
-                  <th>Current Value</th>
-                  <th>Unrealized P&L</th>
-                  <th>Return %</th>
-                </tr>
-              </thead>
-              <tbody>
-                {portfolio.map((holding) => (
-                  <tr key={holding.symbol}>
-                    <td className="symbol">{holding.symbol}</td>
-                    <td>{holding.quantity}</td>
-                    <td>₹{holding.avgPrice.toFixed(2)}</td>
-                    <td>₹{holding.currentPrice.toFixed(2)}</td>
-                    <td>₹{(holding.currentPrice * holding.quantity).toFixed(2)}</td>
-                    <td className={holding.unrealized >= 0 ? "positive" : "negative"}>
-                      ₹{holding.unrealized.toFixed(2)}
-                    </td>
-                    <td className={holding.percent >= 0 ? "positive" : "negative"}>
-                      {holding.percent.toFixed(2)}%
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+      
+      <div className="dashboard-content">
+        <header className="dashboard-header">
+          <div>
+            <h1>Dashboard</h1>
+            <p className="last-updated">
+              Live updates active • Last synced: {lastUpdated.toLocaleTimeString()}
+            </p>
           </div>
-        )}
+          
+        </header>
+
+        {error && <div className="dashboard-error-banner">{error}</div>}
+
+        <div className="dashboard-stats">
+          <div className="stat-card">
+            <h3>Total Portfolio Value</h3>
+            <p className="stat-value">₹{calculateTotalValue().toLocaleString('en-IN', { minimumFractionDigits: 2 })}</p>
+          </div>
+
+          <div className="stat-card">
+            <h3>Unrealized P&L</h3>
+            <p className={`stat-value ${calculateUnrealizedPnL() >= 0 ? "positive" : "negative"}`}>
+              {calculateUnrealizedPnL() >= 0 ? "+" : ""}
+              ₹{calculateUnrealizedPnL().toLocaleString('en-IN', { minimumFractionDigits: 2 })}
+            </p>
+          </div>
+
+          <div className="stat-card">
+            <h3>Realized P&L</h3>
+            <p className={`stat-value ${realizedPnL >= 0 ? "positive" : "negative"}`}>
+              {realizedPnL >= 0 ? "+" : ""}
+              ₹{realizedPnL.toLocaleString('en-IN', { minimumFractionDigits: 2 })}
+            </p>
+          </div>
+        </div>
+
+        <div className="portfolio-section">
+          <div className="section-header">
+            <h2>Your Holdings</h2>
+          </div>
+          
+          {portfolio.length === 0 ? (
+            <div className="no-holdings">
+              <p>Your portfolio is empty.</p>
+              <button onClick={() => navigate("/stocks")}>Explore Stocks</button>
+            </div>
+          ) : (
+            <div className="portfolio-table-container">
+              <table className="portfolio-table">
+                <thead>
+                  <tr>
+                    <th>Symbol</th>
+                    <th>Quantity</th>
+                    <th>Avg. Price</th>
+                    <th>Current Price</th>
+                    <th>Current Value</th>
+                    <th>P&L</th>
+                    <th>Return %</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {portfolio.map((holding) => (
+                    <tr key={holding.symbol} className="holding-row">
+                      <td className="symbol-cell"><strong>{holding.symbol}</strong></td>
+                      <td>{holding.quantity}</td>
+                      <td>₹{holding.avgPrice.toFixed(2)}</td>
+                      <td className="price-cell">₹{holding.currentPrice.toFixed(2)}</td>
+                      <td>₹{(holding.currentPrice * holding.quantity).toFixed(2)}</td>
+                      <td className={holding.unrealized >= 0 ? "positive" : "negative"}>
+                        {holding.unrealized >= 0 ? "+" : ""}₹{holding.unrealized.toFixed(2)}
+                      </td>
+                      <td className={holding.percent >= 0 ? "positive" : "negative"}>
+                        {holding.percent >= 0 ? "+" : ""}{holding.percent.toFixed(2)}%
+                      </td>
+                      <td className="actions-cell">
+                        <button className="btn-action-buy" onClick={() => handleQuickBuy(holding.symbol)}>Buy</button>
+                        <button className="btn-action-sell" onClick={() => handleSell(holding.symbol)}>Sell</button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </div>
       </div>
 
       {showDeposit && (
-        <div className="deposit-modal">
-          <div className="deposit-card">
-            <h3>Add Funds to Wallet</h3>
-            <input
-              type="number"
-              placeholder="Enter amount"
-              value={depositAmount}
-              onChange={(e) => setDepositAmount(e.target.value)}
-              min="1"
-              step="100"
-            />
-            {depositError && <p className="error">{depositError}</p>}
-            <div className="modal-buttons">
-              <button onClick={handleDeposit} className="btn-confirm">
-                Deposit
-              </button>
-              <button onClick={() => setShowDeposit(false)} className="btn-cancel">
-                Cancel
-              </button>
+        <div className="modal-overlay">
+          <div className="deposit-modal">
+            <h3>Add Funds</h3>
+            <div className="input-wrapper">
+              <span>₹</span>
+              <input
+                type="number"
+                placeholder="Enter amount"
+                value={depositAmount}
+                onChange={(e) => setDepositAmount(e.target.value)}
+                autoFocus
+              />
+            </div>
+            {depositError && <p className="modal-error">{depositError}</p>}
+            <div className="modal-footer">
+              <button onClick={() => setShowDeposit(false)} className="btn-secondary">Cancel</button>
+              <button onClick={handleDeposit} className="btn-primary">Confirm Deposit</button>
             </div>
           </div>
         </div>
       )}
+      
+      <Footer />
     </div>
   );
 }

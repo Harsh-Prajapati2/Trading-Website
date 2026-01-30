@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { validateLoginForm } from "../../utils/validation";
-import "./Auth.css";
+import "./login.css";
 
 export default function Login() {
   const { login, loading } = useAuth();
@@ -17,7 +17,6 @@ export default function Login() {
     setErrors({});
     setServerError("");
 
-    // Validate form
     const validationErrors = validateLoginForm(email, password);
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
@@ -33,65 +32,67 @@ export default function Login() {
   };
 
   return (
-    <div className="auth-container">
-      <div className="auth-card">
-        <div className="auth-header">
-          <h1>Trading Platform</h1>
-          <p>Securely login to your account</p>
-        </div>
-        {serverError && <div className="error-message">{serverError}</div>}
-        <form onSubmit={handleSubmit}>
-          <div className="input-group">
-            <label htmlFor="email">Email</label>
-            <input
-              type="email"
-              id="email"
-              placeholder="you@example.com"
-              value={email}
-              onChange={(e) => {
-                setEmail(e.target.value);
-                if (errors.email) {
-                  setErrors({ ...errors, email: "" });
-                }
-              }}
-              className={errors.email ? "input-error" : ""}
-            />
-            {errors.email && <span className="field-error">{errors.email}</span>}
+    <div className="auth-page">
+      {/* Decorative background elements */}
+      <div className="bg-glow"></div>
+      
+      <div className="auth-container">
+        <div className="auth-card">
+          <div className="auth-header">
+            <h1>Trading<span>Platform</span></h1>
+            <p>Welcome back! Please enter your details.</p>
           </div>
 
-          <div className="input-group">
-            <label htmlFor="password">Password</label>
-            <input
-              type="password"
-              id="password"
-              placeholder="••••••••"
-              value={password}
-              onChange={(e) => {
-                setPassword(e.target.value);
-                if (errors.password) {
-                  setErrors({ ...errors, password: "" });
-                }
-              }}
-              className={errors.password ? "input-error" : ""}
-            />
-            {errors.password && <span className="field-error">{errors.password}</span>}
+          {serverError && (
+            <div className="error-banner">
+              <span className="icon">⚠️</span> {serverError}
+            </div>
+          )}
+
+          <form onSubmit={handleSubmit} className="auth-form">
+            <div className="input-group">
+              <label htmlFor="email">Email Address</label>
+              <input
+                type="email"
+                id="email"
+                placeholder="name@company.com"
+                value={email}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                  if (errors.email) setErrors({ ...errors, email: "" });
+                }}
+                className={errors.email ? "input-error" : ""}
+              />
+              {errors.email && <span className="field-error">{errors.email}</span>}
+            </div>
+
+            <div className="input-group">
+              <div className="label-row">
+                <label htmlFor="password">Password</label>
+                <Link to="/forgot-password" className="forgot-password">Forgot?</Link>
+              </div>
+              <input
+                type="password"
+                id="password"
+                placeholder="••••••••"
+                value={password}
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                  if (errors.password) setErrors({ ...errors, password: "" });
+                }}
+                className={errors.password ? "input-error" : ""}
+              />
+              {errors.password && <span className="field-error">{errors.password}</span>}
+            </div>
+
+            <button type="submit" className="auth-button" disabled={loading}>
+              {loading ? <div className="spinner"></div> : "Sign In"}
+            </button>
+          </form>
+
+          <div className="switch-auth">
+            <p>Don't have an account? <Link to="/signup">Create account</Link></p>
           </div>
-
-          <div className="form-footer">
-            <a href="#" className="forgot-password">
-              Forgot password?
-            </a>
-          </div>
-
-          <button type="submit" className="auth-button" disabled={loading}>
-            {loading ? "Logging in..." : "Log In"}
-          </button>
-        </form>
-
-        <div className="switch-auth">
-          <p>
-            Don't have an account? <Link to="/signup">Sign Up</Link>
-          </p>
         </div>
       </div>
     </div>

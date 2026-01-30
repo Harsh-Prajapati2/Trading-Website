@@ -44,3 +44,12 @@ export const getRealizedPnL = async () => {
     throw error.response?.data || { error: "Failed to fetch PnL" };
   }
 };
+
+export const getOrders = async () => {
+  try {
+    const res = await api.get("/trade/orders");
+    return res.data;
+  } catch (error) {
+    throw error.response?.data || { error: "Failed to fetch orders" };
+  }
+};

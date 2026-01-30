@@ -45,7 +45,7 @@ cron.schedule("*/3 * * * * *", async () => {
           : 0;
 
         // Determine status (up or down)
-        const status = newPrice >= stockPrice.price ? "up" : "down";
+        const status = newPrice >= validBasePrice ? "up" : "down";
 
         // Update stock price
         await StockPrice.updateOne(

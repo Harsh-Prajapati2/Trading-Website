@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { validateSignupForm } from "../../utils/validation";
-import "./Auth.css";
+import "./login.css";
 
 export default function Signup() {
   const { signup, loading } = useAuth();
@@ -36,13 +36,15 @@ export default function Signup() {
   };
 
   return (
-    <div className="auth-container">
-      <div className="auth-card">
-        <div className="auth-header">
-          <h1>Trading Platform</h1>
-          <p>Create your account</p>
-        </div>
-        {serverError && <div className="error-message">{serverError}</div>}
+    <div className="auth-page">
+      <div className="bg-glow"></div>
+      <div className="auth-container">
+        <div className="auth-card">
+          <div className="auth-header">
+            <h1>Trading<span>Platform</span></h1>
+            <p>Create your account</p>
+          </div>
+          {serverError && <div className="error-banner">{serverError}</div>}
         <form onSubmit={handleSubmit}>
           <div className="input-group">
             <label htmlFor="name">Full Name</label>
@@ -145,6 +147,7 @@ export default function Signup() {
           </p>
         </div>
       </div>
+    </div>
     </div>
   );
 }

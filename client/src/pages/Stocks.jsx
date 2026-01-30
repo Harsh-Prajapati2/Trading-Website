@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { getStocks } from "../api/stocks.api";
 import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 import "./Stocks.css";
 
 export default function Stocks() {
   const navigate = useNavigate();
+  const location = useLocation();
   const [stocks, setStocks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -31,6 +33,14 @@ export default function Stocks() {
       }
     }
   }, [stocks]);
+
+  // Handle auto-selection from navigation state (e.g. from Dashboard Quick Buy)
+  useEffect(() => {
+    if (location.state?.autoSelect && stocks.length > 0 && !selectedStock) {
+      const stockToSelect = stocks.find((s) => s.symbol === location.state.autoSelect);
+      if (stockToSelect) setSelectedStock(stockToSelect);
+    }
+  }, [stocks, location.state, selectedStock]);
 
   const fetchStocks = async () => {
     try {
@@ -122,7 +132,7 @@ export default function Stocks() {
                     <div className="stock-price">
                       <p className="price">₹{parseFloat(stock.price || 0).toFixed(2)}</p>
                       {stock.changePercent !== undefined && (
-                        <p className={`change ${stock.status === "up" ? "positive" : "negative"}`}>
+                        <p className={`change ${parseFloat(stock.changePercent) >= 0 ? "positive" : "negative"}`}>
                           {stock.changePercent > 0 ? "+" : ""}{parseFloat(stock.changePercent).toFixed(4)}%
                         </p>
                       )}
@@ -149,7 +159,7 @@ export default function Stocks() {
                 {selectedStock.change !== undefined && (
                   <div className="detail-row">
                     <span>Change Amount:</span>
-                    <span className={selectedStock.status === "up" ? "positive" : "negative"}>
+                    <span className={parseFloat(selectedStock.change) >= 0 ? "positive" : "negative"}>
                       {selectedStock.change > 0 ? "+" : ""}
                       ₹{parseFloat(selectedStock.change).toFixed(2)}
                     </span>
@@ -159,18 +169,18 @@ export default function Stocks() {
                 {selectedStock.changePercent !== undefined && (
                   <div className="detail-row">
                     <span>Change Percentage:</span>
-                    <span className={selectedStock.status === "up" ? "positive" : "negative"}>
+                    <span className={parseFloat(selectedStock.changePercent) >= 0 ? "positive" : "negative"}>
                       {selectedStock.changePercent > 0 ? "+" : ""}
                       {parseFloat(selectedStock.changePercent).toFixed(4)}%
                     </span>
                   </div>
                 )}
 
-                {selectedStock.status && (
+                {(selectedStock.changePercent !== undefined || selectedStock.status) && (
                   <div className="detail-row">
                     <span>Status:</span>
-                    <span className={selectedStock.status === "up" ? "positive" : "negative"}>
-                      {selectedStock.status === "up" ? "📈 UP" : "📉 DOWN"}
+                    <span className={parseFloat(selectedStock.changePercent || 0) >= 0 ? "positive" : "negative"}>
+                      {parseFloat(selectedStock.changePercent || 0) >= 0 ? "📈 UP" : "📉 DOWN"}
                     </span>
                   </div>
                 )}
@@ -210,6 +220,7 @@ export default function Stocks() {
           )}
         </div>
       </div>
+      <Footer />
     </div>
   );
 }
