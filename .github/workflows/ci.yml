@@ -1,0 +1,42 @@
+name: CI - build
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Build client
+        working-directory: client
+        run: |
+          npm ci
+          npm run build
+
+      - name: Build server (install deps)
+        working-directory: server
+        run: |
+          npm ci
+
+      - name: Build Docker images (optional push)
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          file: ./server/Dockerfile
+          push: false
+
+      - name: Upload client build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: client-dist
+          path: client/dist
