@@ -23,7 +23,7 @@ export default function Navbar() {
       <div className="navbar-container">
         <div className="navbar-brand" onClick={() => navigate("/dashboard")}>
           <span className="brand-icon">📈</span>
-          <span className="brand-text">TradeHub</span>
+          <span className="brand-text">TradingPlatform</span>
         </div>
 
         <div className="navbar-links">
