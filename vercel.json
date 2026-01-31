@@ -6,6 +6,15 @@
       "use": "@vercel/static-build",
       "config": { "distDir": "dist" }
     }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "https://$BACKEND_URL/api/$1"
+    },
+    {
+      "src": "^(?!/api)(.*)$",
+      "dest": "/$1"
+    }
   ]
 }
-
