@@ -27,12 +27,7 @@ Vercel deployment (recommended for the frontend)
 	1. Import the repository into Vercel (via GitHub/GitLab/Bitbucket import).
 	2. In the project settings set the root to `client` (or use the provided `vercel.json`).
 	3. Set the build command to `npm run build` and output directory to `dist` (Vercel usually detects this automatically).
-	4. Add an environment variable `VITE_BACKEND_URL` pointing to your backend base URL (for example `https://api.example.com`). The client now reads this via `import.meta.env.VITE_BACKEND_URL`. Example API wrapper is in `client/src/api/axios.js`.
-
-	How to set environment variables in Vercel:
-	- In the Vercel dashboard open your project → Settings → Environment Variables.
-	- Add `VITE_BACKEND_URL` with value `https://your-backend-domain` for the `Production` environment.
-	- Redeploy the project after adding the variable.
+	4. Add an environment variable `BACKEND_URL` pointing to your backend base URL (for example `api.example.com`). The app should use this variable (e.g., `process.env.REACT_APP_BACKEND_URL` or a client config) to call API endpoints.
 
 	Important: do not rely on trying to proxy `/api/*` using `vercel.json` with an env var (for example `https://$BACKEND_URL`). Vercel does not expand environment variables inside `vercel.json` routes and rewrites; that causes 404s for `/api/*` (the deployment has no matching route).
 
