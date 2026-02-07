@@ -7,6 +7,7 @@ const orderSchema = new mongoose.Schema({
   quantity: Number,
   price: Number,
   amount: Number,
+  pnl : Number,
   status: { type: String, default: "completed" },
   createdAt: { type: Date, default: Date.now }
 });

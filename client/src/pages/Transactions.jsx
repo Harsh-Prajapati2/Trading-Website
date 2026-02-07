@@ -47,8 +47,8 @@ export default function Transactions() {
     switch (type) {
       case "credit":
         return "💰";
-      case "debit":
-        return "💸";
+      // case "debit":
+      //   return "💸";
       case "withdraw":
         return "🏦";
       default:
@@ -105,12 +105,12 @@ export default function Transactions() {
           >
             💰 Deposits
           </button>
-          <button
+          {/* <button
             className={`filter-btn ${filterType === "debit" ? "active" : ""}`}
             onClick={() => setFilterType("debit")}
           >
             💸 Debits
-          </button>
+          </button> */}
           <button
             className={`filter-btn ${filterType === "withdraw" ? "active" : ""}`}
             onClick={() => setFilterType("withdraw")}

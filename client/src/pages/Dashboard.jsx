@@ -189,7 +189,7 @@ export default function Dashboard() {
           {portfolio.length === 0 ? (
             <div className="no-holdings">
               <p>Your portfolio is empty.</p>
-              <button onClick={() => navigate("/stocks")}>Explore Stocks</button>
+              <button className ="btn-primary" onClick={() => navigate("/stocks")}>Explore Stocks</button>
             </div>
           ) : (
             <div className="portfolio-table-container">
